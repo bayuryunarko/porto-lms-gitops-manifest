@@ -1,0 +1,48 @@
+# ==========================================
+# INGRESS RESOURCE (Pintu Masuk Publik)
+# ==========================================
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lms-ingress-staging
+  namespace: default
+  annotations:
+    # Memberitahu K3s untuk menggunakan Ingress Controller bawaannya (Traefik)
+    kubernetes.io/ingress.class: "traefik"
+    # (Opsional) Jika Anda ingin menambahkan aturan hapus trailing slash, dll.
+spec:
+  rules:
+  - http:
+      paths:
+      # ----------------------------------------
+      # 1. Rute API (Backend)
+      # ----------------------------------------
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: api-gateway
+            port:
+              number: 8080
+
+      # ----------------------------------------
+      # 2. Rute Frontend Assessment (Halaman Ujian)
+      # ----------------------------------------
+      - path: /assessment
+        pathType: Prefix
+        backend:
+          service:
+            name: fe-assessment
+            port:
+              number: 80
+
+      # ----------------------------------------
+      # 3. Rute Frontend Main (Catch-All)
+      # ----------------------------------------
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fe-main
+            port:
+              number: 80

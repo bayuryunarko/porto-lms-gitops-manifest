@@ -1,0 +1,72 @@
+# ==========================================
+# 1. FRONTEND MAIN (Dasbor, Login, Ranking)
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-main
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fe-main
+  template:
+    metadata:
+      labels:
+        app: fe-main
+    spec:
+      containers:
+      - name: fe-main
+        image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/fe-main:latest
+        ports:
+        # Port 80 ini adalah port Nginx di dalam container React, bukan port server VM
+        - containerPort: 80 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fe-main
+spec:
+  type: ClusterIP
+  selector:
+    app: fe-main
+  ports:
+  - port: 80
+    targetPort: 80
+
+# ==========================================
+# 2. FRONTEND ASSESSMENT (Halaman Ujian)
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-assessment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fe-assessment
+  template:
+    metadata:
+      labels:
+        app: fe-assessment
+    spec:
+      containers:
+      - name: fe-assessment
+        image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/fe-assessment:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fe-assessment
+spec:
+  type: ClusterIP
+  selector:
+    app: fe-assessment
+  ports:
+  - port: 80
+    targetPort: 80

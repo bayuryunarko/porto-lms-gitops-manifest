@@ -1,0 +1,228 @@
+# ==========================================
+# 1. AUTH SERVICE
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - name: auth-service
+        # Gunakan URL Artifact Registry Anda nanti
+        image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/auth-service:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_NAME
+          value: "auth_db"
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: DB_PORT
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lms-secret-staging
+              key: DB_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  type: ClusterIP
+  selector:
+    app: auth-service
+  ports:
+  - port: 8000
+    targetPort: 8000
+
+# ==========================================
+# 2. CONTENT SERVICE
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-service
+  template:
+    metadata:
+      labels:
+        app: content-service
+    spec:
+      containers:
+      - name: content-service
+        image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/content-service:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_NAME
+          value: "content_db"
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: DB_PORT
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lms-secret-staging
+              key: DB_PASSWORD
+        - name: GCS_BUCKET_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: GCS_BUCKET_NAME
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-service
+spec:
+  type: ClusterIP
+  selector:
+    app: content-service
+  ports:
+  - port: 8000
+    targetPort: 8000
+
+
+# ==========================================
+# 3. ASSESSMENT SERVICE
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assessment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assessment-service
+  template:
+    metadata:
+      labels:
+        app: assessment-service
+    spec:
+      containers:
+      - name: assessment-service
+        image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/assessment-service:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_NAME
+          value: "assessment_db"
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: DB_PORT
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lms-secret-staging
+              key: DB_PASSWORD
+        - name: INTERNAL_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: lms-secret-staging
+              key: INTERNAL_API_KEY
+        # Injeksi URL internal Kuberbetes untuk menembak skor baru ke Leaderboard
+        - name: LEADERBOARD_URL
+          value: "http://leaderboard-service:8000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: assessment-service
+spec:
+  type: ClusterIP
+  selector:
+    app: assessment-service
+  ports:
+  - port: 8000
+    targetPort: 8000
+
+# ==========================================
+# 4. LEADERBOARD SERVICE
+# ==========================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: leaderboard-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: leaderboard-service
+  template:
+    metadata:
+      labels:
+        app: leaderboard-service
+    spec:
+      containers:
+      - name: leaderboard-service
+        image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/leaderboard-service:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: lms-config-staging
+              key: REDIS_PORT
+        - name: INTERNAL_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: lms-secret-staging
+              key: INTERNAL_API_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: leaderboard-service
+spec:
+  type: ClusterIP
+  selector:
+    app: leaderboard-service
+  ports:
+  - port: 8000
+    targetPort: 8000
+
+

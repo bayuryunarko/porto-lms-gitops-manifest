@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lms-staging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # Ganti dengan URL GitHub Anda
+    repoURL: 'https://github.com/bayuryunarko/porto-lms-gitops-manifest.git'
+    targetRevision: main
+    # Mengarah ke folder staging yang berisi manifes aplikasi LMS
+    path: staging
+  destination:
+    # URL default Kuberbetes yang merepresentasikan "deploy ke klaster lokal ini sendiri"
+    server: 'https://kubernetes.default.svc'
+    # Target namespace tempat aplikasi LMS Anda berjalan
+    namespace: default
+  syncPolicy:
+    automated:
+      # ArgoCD akan menghapus resource di K3s yang file YAML-nya sudah dihapus di Git
+      prune: true
+      # ArgoCD akan memulihkan perubahan manual di K3s kembali sesuai dengan file Git
+      selfHeal: true

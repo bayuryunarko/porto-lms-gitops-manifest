@@ -15,10 +15,12 @@ spec:
     # URL default Kuberbetes yang merepresentasikan "deploy ke klaster lokal ini sendiri"
     server: 'https://kubernetes.default.svc'
     # Target namespace tempat aplikasi LMS Anda berjalan
-    namespace: default
+    namespace: lms-staging
   syncPolicy:
     automated:
       # ArgoCD akan menghapus resource di K3s yang file YAML-nya sudah dihapus di Git
       prune: true
       # ArgoCD akan memulihkan perubahan manual di K3s kembali sesuai dengan file Git
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true # <-- WAJIB DITAMBAHKAN: Mengizinkan ArgoCD membuat namespace 'lms-staging' jika belum ada

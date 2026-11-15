@@ -5,7 +5,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: lms-ingress-staging
-  namespace: default
+  namespace: lms-staging
   annotations:
     # Memberitahu K3s untuk menggunakan Ingress Controller bawaannya (Traefik)
     kubernetes.io/ingress.class: "traefik"

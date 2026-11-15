@@ -5,7 +5,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fe-main
-  namespace: default
+  namespace: lms-staging
 spec:
   replicas: 1
   selector:
@@ -20,13 +20,13 @@ spec:
       - name: fe-main
         image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/fe-main:latest
         ports:
-        # Port 80 ini adalah port Nginx di dalam container React, bukan port server VM
         - containerPort: 80 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: fe-main
+  namespace: lms-staging # <-- INI YANG SEBELUMNYA HILANG
 spec:
   type: ClusterIP
   selector:
@@ -42,7 +42,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fe-assessment
-  namespace: default
+  namespace: lms-staging
 spec:
   replicas: 1
   selector:
@@ -63,6 +63,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fe-assessment
+  namespace: lms-staging # <-- INI YANG SEBELUMNYA HILANG
 spec:
   type: ClusterIP
   selector:

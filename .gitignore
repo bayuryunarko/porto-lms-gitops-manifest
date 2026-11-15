@@ -34,3 +34,6 @@ Thumbs.db
 # =========================
 .cache/
 tmp/
+
+
+secrets.yaml

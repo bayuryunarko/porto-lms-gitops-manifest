@@ -20,7 +20,7 @@ spec:
       - name: gcp-ar-secret    
       containers:
       - name: api-gateway
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/api-gateway:staging-d5d5de22456574b3c88000b77569613a51a8712d
+        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/api-gateway:staging-130ade70fdc03ef43977ae23882b93fa75215f0c
         ports:
         - containerPort: 8080
         env:

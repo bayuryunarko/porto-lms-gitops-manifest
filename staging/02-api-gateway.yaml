@@ -16,6 +16,8 @@ spec:
       labels:
         app: api-gateway
     spec:
+      imagePullSecrets:
+      - name: gcp-ar-secret    
       containers:
       - name: api-gateway
         image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/api-gateway:latest

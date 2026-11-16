@@ -20,7 +20,7 @@ spec:
       - name: gcp-ar-secret    
       containers:
       - name: fe-main
-        image: us-central1-docker.pkg.dev/bayu-project/porto-lms-images/fe-main:latest
+        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/fe-main:staging-d5d5de22456574b3c88000b77569613a51a8712d
         ports:
         - containerPort: 80 
 ---

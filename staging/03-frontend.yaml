@@ -1,3 +1,4 @@
+# ./staging/03-frontend.yaml
 # ==========================================
 # 1. FRONTEND MAIN (Dasbor, Login, Ranking)
 # ==========================================
@@ -28,7 +29,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fe-main
-  namespace: lms-staging # <-- INI YANG SEBELUMNYA HILANG
+  namespace: lms-staging
 spec:
   type: ClusterIP
   selector:
@@ -67,7 +68,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fe-assessment
-  namespace: lms-staging # <-- INI YANG SEBELUMNYA HILANG
+  namespace: lms-staging
 spec:
   type: ClusterIP
   selector:

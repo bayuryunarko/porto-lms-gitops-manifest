@@ -21,7 +21,7 @@ spec:
       - name: gcp-ar-secret
       containers:
       - name: auth-service
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/auth-service:staging-130ade70fdc03ef43977ae23882b93fa75215f0c
+        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/auth-service:staging-1d6637977e811f2b89f9496d67386a94c019e5a1
         ports:
         - containerPort: 8000
         env:
@@ -90,7 +90,7 @@ spec:
       - name: gcp-ar-secret
       containers:
       - name: content-service
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/content-service:staging-130ade70fdc03ef43977ae23882b93fa75215f0c
+        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/content-service:staging-1d6637977e811f2b89f9496d67386a94c019e5a1
         ports:
         - containerPort: 8001
         env:
@@ -155,7 +155,7 @@ spec:
       - name: gcp-ar-secret
       containers:
       - name: assessment-service
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/assessment-service:staging-130ade70fdc03ef43977ae23882b93fa75215f0c
+        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/assessment-service:staging-1d6637977e811f2b89f9496d67386a94c019e5a1
         ports:
         - containerPort: 8002
         env:
@@ -217,7 +217,7 @@ spec:
       - name: gcp-ar-secret    
       containers:
       - name: leaderboard-service
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/leaderboard-service:staging-130ade70fdc03ef43977ae23882b93fa75215f0c
+        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/leaderboard-service:staging-1d6637977e811f2b89f9496d67386a94c019e5a1
         ports:
         - containerPort: 8003
         env:

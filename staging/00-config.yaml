@@ -22,5 +22,6 @@ data:
   FIRST_ADMIN_USER: "admin_gcp"
   
   # Cadangan Jika Menggunakan Cloud Storage Nanti
-  GCS_BUCKET_NAME: "porto-staging-bucket"
+  # GCS_BUCKET_NAME: "porto-staging-bucket"
   GCP_BUCKET_NAME: "porto-staging-bucket"
+  GCP_SA_EMAIL: "21535720724-compute@developer.gserviceaccount.com"

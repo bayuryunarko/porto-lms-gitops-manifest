@@ -1,5 +1,5 @@
 # 1. Pemotong Prefix untuk Assessment (Routing)
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: strip-assessment-prefix
@@ -10,7 +10,7 @@ spec:
       - /assessment
 ---
 # 2. Injeksi Header Keamanan (Security Hardening)
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: ttraefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: security-headers
@@ -23,7 +23,7 @@ spec:
     contentSecurityPolicy: "default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';"
 ---
 # 3. Kompresi GZIP Otomatis (Performance)
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: gzip-compress
@@ -32,7 +32,7 @@ spec:
   compress: {}
 ---
 # 4. Batas Maksimal Upload 20MB (Capacity Limit)
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: upload-limit

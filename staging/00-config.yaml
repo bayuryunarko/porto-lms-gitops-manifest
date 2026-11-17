@@ -23,3 +23,4 @@ data:
   
   # Cadangan Jika Menggunakan Cloud Storage Nanti
   GCS_BUCKET_NAME: "porto-staging-bucket"
+  GCP_BUCKET_NAME: "porto-staging-bucket"

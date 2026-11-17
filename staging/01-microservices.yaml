@@ -18,43 +18,43 @@ spec:
         app: auth-service
     spec:
       imagePullSecrets:
-      - name: gcp-ar-secret
+        - name: gcp-ar-secret
       containers:
-      - name: auth-service
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/auth-service:staging-9250a8296a9afeebefbfe9c81c8a0c7af6ff36ad
-        ports:
-        - containerPort: 8000
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: AUTH_DB_URL
-        - name: SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: SECRET_KEY
-        - name: ALLOWED_ORIGINS
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: ALLOWED_ORIGINS
-        - name: FIRST_ADMIN_USER
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: FIRST_ADMIN_USER
-        - name: FIRST_ADMIN_PASS
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: FIRST_ADMIN_PASS
-        - name: ENVIRONMENT
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: ENVIRONMENT
+        - name: auth-service
+          image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/auth-service:staging-9250a8296a9afeebefbfe9c81c8a0c7af6ff36ad
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: AUTH_DB_URL
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: SECRET_KEY
+            - name: ALLOWED_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: ALLOWED_ORIGINS
+            - name: FIRST_ADMIN_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: FIRST_ADMIN_USER
+            - name: FIRST_ADMIN_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: FIRST_ADMIN_PASS
+            - name: ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: ENVIRONMENT
 ---
 apiVersion: v1
 kind: Service
@@ -66,8 +66,8 @@ spec:
   selector:
     app: auth-service
   ports:
-  - port: 8000
-    targetPort: 8000
+    - port: 8000
+      targetPort: 8000
 ---
 # ==========================================
 # 2. CONTENT SERVICE
@@ -88,38 +88,38 @@ spec:
         app: content-service
     spec:
       imagePullSecrets:
-      - name: gcp-ar-secret
+        - name: gcp-ar-secret
       containers:
-      - name: content-service
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/content-service:staging-9250a8296a9afeebefbfe9c81c8a0c7af6ff36ad
-        ports:
-        - containerPort: 8001
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: CONTENT_DB_URL
-        - name: SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: SECRET_KEY
-        - name: ENVIRONMENT
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: ENVIRONMENT
-        - name: STORAGE_MODE
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: STORAGE_MODE
-        - name: GCP_BUCKET_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: GCP_BUCKET_NAME
+        - name: content-service
+          image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/content-service:staging-9250a8296a9afeebefbfe9c81c8a0c7af6ff36ad
+          ports:
+            - containerPort: 8001
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: CONTENT_DB_URL
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: SECRET_KEY
+            - name: ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: ENVIRONMENT
+            - name: STORAGE_MODE
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: STORAGE_MODE
+            - name: GCP_BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: GCP_BUCKET_NAME
 ---
 apiVersion: v1
 kind: Service
@@ -131,8 +131,8 @@ spec:
   selector:
     app: content-service
   ports:
-  - port: 8001
-    targetPort: 8001
+    - port: 8001
+      targetPort: 8001
 ---
 # ==========================================
 # 3. ASSESSMENT SERVICE
@@ -153,35 +153,35 @@ spec:
         app: assessment-service
     spec:
       imagePullSecrets:
-      - name: gcp-ar-secret
+        - name: gcp-ar-secret
       containers:
-      - name: assessment-service
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/assessment-service:staging-9250a8296a9afeebefbfe9c81c8a0c7af6ff36ad
-        ports:
-        - containerPort: 8002
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: ASSESSMENT_DB_URL
-        - name: SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: SECRET_KEY
-        - name: ENVIRONMENT
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: ENVIRONMENT
-        - name: INTERNAL_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: INTERNAL_API_KEY
-        - name: LEADERBOARD_SERVICE_URL
-          value: "http://leaderboard-service:8003"
+        - name: assessment-service
+          image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/assessment-service:staging-9250a8296a9afeebefbfe9c81c8a0c7af6ff36ad
+          ports:
+            - containerPort: 8002
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: ASSESSMENT_DB_URL
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: SECRET_KEY
+            - name: ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: ENVIRONMENT
+            - name: INTERNAL_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: INTERNAL_API_KEY
+            - name: LEADERBOARD_SERVICE_URL
+              value: "http://leaderboard-service:8003"
 ---
 apiVersion: v1
 kind: Service
@@ -193,8 +193,8 @@ spec:
   selector:
     app: assessment-service
   ports:
-  - port: 8002
-    targetPort: 8002
+    - port: 8002
+      targetPort: 8002
 ---
 # ==========================================
 # 4. LEADERBOARD SERVICE
@@ -215,38 +215,38 @@ spec:
         app: leaderboard-service
     spec:
       imagePullSecrets:
-      - name: gcp-ar-secret    
+        - name: gcp-ar-secret    
       containers:
-      - name: leaderboard-service
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/leaderboard-service:staging-9250a8296a9afeebefbfe9c81c8a0c7af6ff36ad
-        ports:
-        - containerPort: 8003
-        env:
-        - name: REDIS_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: REDIS_HOST
-        - name: REDIS_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: lms-config-staging
-              key: REDIS_PORT
-        - name: REDIS_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: REDIS_PASSWORD
-        - name: SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: SECRET_KEY
-        - name: INTERNAL_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: lms-secret-staging
-              key: INTERNAL_API_KEY
+        - name: leaderboard-service
+          image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/leaderboard-service:staging-9250a8296a9afeebefbfe9c81c8a0c7af6ff36ad
+          ports:
+            - containerPort: 8003
+          env:
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: REDIS_PORT
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: REDIS_PASSWORD
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: SECRET_KEY
+            - name: INTERNAL_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lms-secret-staging
+                  key: INTERNAL_API_KEY
 ---
 apiVersion: v1
 kind: Service
@@ -258,5 +258,5 @@ spec:
   selector:
     app: leaderboard-service
   ports:
-  - port: 8003
-    targetPort: 8003
+    - port: 8003
+      targetPort: 8003

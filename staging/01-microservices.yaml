@@ -115,11 +115,11 @@ spec:
             configMapKeyRef:
               name: lms-config-staging
               key: STORAGE_MODE
-        - name: GCS_BUCKET_NAME
+        - name: GCP_BUCKET_NAME
           valueFrom:
             configMapKeyRef:
               name: lms-config-staging
-              key: GCS_BUCKET_NAME
+              key: GCP_BUCKET_NAME
 ---
 apiVersion: v1
 kind: Service

@@ -9,40 +9,42 @@ metadata:
   annotations:
     # Memberitahu K3s untuk menggunakan Ingress Controller bawaannya (Traefik)
     kubernetes.io/ingress.class: "traefik"
-    # (Opsional) Jika Anda ingin menambahkan aturan hapus trailing slash, dll.
+    # Rantai (Chain) seluruh aturan middleware secara berurutan:
+    traefik.ingress.kubernetes.io/router.middlewares: lms-staging-strip-assessment-prefix@kubernetescrd, lms-staging-security-headers@kubernetescrd, lms-staging-gzip-compress@kubernetescrd, lms-staging-upload-limit@kubernetescrd
 spec:
   rules:
-  - http:
-      paths:
-      # ----------------------------------------
-      # 1. Rute API (Backend)
-      # ----------------------------------------
-      - path: /api
-        pathType: Prefix
-        backend:
-          service:
-            name: api-gateway
-            port:
-              number: 8080
+    - host: "*"
+      http:
+        paths:
+          # ----------------------------------------
+          # 1. Rute API (Backend)
+          # ----------------------------------------
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 8080
 
-      # ----------------------------------------
-      # 2. Rute Frontend Assessment (Halaman Ujian)
-      # ----------------------------------------
-      - path: /assessment
-        pathType: Prefix
-        backend:
-          service:
-            name: fe-assessment
-            port:
-              number: 80
+          # ----------------------------------------
+          # 2. Rute Frontend Assessment (Halaman Ujian)
+          # ----------------------------------------
+          - path: /assessment
+            pathType: Prefix
+            backend:
+              service:
+                name: fe-assessment
+                port:
+                  number: 80
 
-      # ----------------------------------------
-      # 3. Rute Frontend Main (Catch-All)
-      # ----------------------------------------
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: fe-main
-            port:
-              number: 80
+          # ----------------------------------------
+          # 3. Rute Frontend Main (Catch-All)
+          # ----------------------------------------
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fe-main
+                port:
+                  number: 80

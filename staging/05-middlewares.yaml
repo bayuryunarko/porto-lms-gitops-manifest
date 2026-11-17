@@ -1,0 +1,42 @@
+# 1. Pemotong Prefix untuk Assessment (Routing)
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-assessment-prefix
+  namespace: lms-staging
+spec:
+  stripPrefix:
+    prefixes:
+      - /assessment
+---
+# 2. Injeksi Header Keamanan (Security Hardening)
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: security-headers
+  namespace: lms-staging
+spec:
+  headers:
+    customFrameOptionsValue: "SAMEORIGIN"
+    contentTypeNosniff: true
+    browserXssFilter: true
+    contentSecurityPolicy: "default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline';"
+---
+# 3. Kompresi GZIP Otomatis (Performance)
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: gzip-compress
+  namespace: lms-staging
+spec:
+  compress: {}
+---
+# 4. Batas Maksimal Upload 20MB (Capacity Limit)
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: upload-limit
+  namespace: lms-staging
+spec:
+  buffering:
+    maxRequestBodyBytes: 20971520 # 20MB dikonversi ke Bytes

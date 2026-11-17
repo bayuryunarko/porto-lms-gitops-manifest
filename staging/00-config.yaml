@@ -14,7 +14,7 @@ data:
 
   # Konfigurasi Aplikasi & Lingkungan
   ENVIRONMENT: "production"
-  STORAGE_MODE: "local"
+  STORAGE_MODE: "gcs"
   ALLOWED_ORIGINS: "http://localhost,http://127.0.0.1" 
   ACCESS_TOKEN_EXPIRE_MINUTES: "60"
   

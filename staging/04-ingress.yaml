@@ -13,8 +13,8 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: lms-staging-strip-assessment-prefix@kubernetescrd, lms-staging-security-headers@kubernetescrd, lms-staging-gzip-compress@kubernetescrd, lms-staging-upload-limit@kubernetescrd
 spec:
   rules:
-    - host: "*"
-      http:
+    # - host: "*"
+    - http:
         paths:
           # ----------------------------------------
           # 1. Rute API (Backend)

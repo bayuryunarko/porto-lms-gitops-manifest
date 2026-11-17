@@ -120,6 +120,11 @@ spec:
                 configMapKeyRef:
                   name: lms-config-staging
                   key: GCP_BUCKET_NAME
+            - name: GCP_SA_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: lms-config-staging
+                  key: GCP_SA_EMAIL
 ---
 apiVersion: v1
 kind: Service

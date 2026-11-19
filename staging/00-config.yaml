@@ -25,3 +25,5 @@ data:
   # GCS_BUCKET_NAME: "porto-staging-bucket"
   GCP_BUCKET_NAME: "porto-staging-bucket"
   GCP_SA_EMAIL: "21535720724-compute@developer.gserviceaccount.com"
+
+  TRUSTED_PROXIES: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,130.211.0.0/22,35.191.0.0/16"

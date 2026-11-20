@@ -21,7 +21,7 @@ spec:
       - name: gcp-ar-secret    
       containers:
       - name: fe-main
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/fe-main:staging-17f970814d717e66ed5eed54499f3d0476c3dd04
+        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/fe-main:staging-d11591b91930225207569982616be6ca608ef838
         ports:
         - containerPort: 80 
 ---
@@ -60,7 +60,7 @@ spec:
       - name: gcp-ar-secret    
       containers:
       - name: fe-assessment
-        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/fe-assessment:staging-17f970814d717e66ed5eed54499f3d0476c3dd04
+        image: us-central1-docker.pkg.dev/bayu-project-502304/porto-lms-images/fe-assessment:staging-d11591b91930225207569982616be6ca608ef838
         ports:
         - containerPort: 80
 ---
